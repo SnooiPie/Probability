@@ -1,18 +1,17 @@
-def calculate_probabilities(outcomes, trials):
-    """
-    Calculate the expected occurrences for each possible outcome.
-    
-    Args:
-        outcomes (int): The number of possible outcomes (e.g., 6 for a die).
-        trials (int): The number of trials to simulate.
+import random
 
-    Returns:
-        dict: A dictionary mapping each outcome to its expected occurrence.
-    """
-    # Each outcome has an equal probability
-    probability = 1 / outcomes
-    results = {f"Outcome {i+1}": trials * probability for i in range(outcomes)}
-    return results
+def calculate_probabilities(outcomes, trials):
+    # Calculate the expected occurrences for each outcome
+    probability = 1 / outcomes  # Each outcome has an equal probability
+    expected_results = {f"Outcome {i+1}": trials * probability for i in range(outcomes)}  # Expected occurrences
+    actual_results = {f"Outcome {i+1}": 0 for i in range(outcomes)}  # Initialize count for each outcome
+
+    # Simulate trials
+    for _ in range(trials):
+        result = random.randint(1, outcomes)  # Random outcome from 1 to 'outcomes'
+        actual_results[f"Outcome {result}"] += 1  # Increment the count for the outcome
+
+    return expected_results, actual_results
 
 def main():
     print("Probability Calculator")
@@ -25,20 +24,25 @@ def main():
             return
 
         # Ask the user for the number of trials
-        trials = int(input("How many trials would you like to conduct? "))
+        trials = int(input("How many trials would you like to perform? "))
         if trials <= 0:
             print("Please enter a positive number.")
             return
 
     except ValueError:
-        print("Invalid input! Please enter a valid number.")
+        print("Invalid input! Please enter a number.")
         return
 
     # Calculate and display the results
-    results = calculate_probabilities(outcomes, trials)
-    print("\nResults (Expected Values):")
-    for outcome, count in results.items():
-        print(f"{outcome}: {count:.2f} occurrences")
+    expected_results, actual_results = calculate_probabilities(outcomes, trials)
+    print("\nResults:")
+    print("Expected Values (Probabilities):")
+    for outcome, expected_count in expected_results.items():
+        print(f"{outcome}: {expected_count:.2f} times")
+
+    print("\nActual Results:")
+    for outcome, actual_count in actual_results.items():
+        print(f"{outcome}: {actual_count} times")
 
 if __name__ == "__main__":
     main()
