@@ -18,7 +18,7 @@ def main():
 
     try:
         # Ask the user for the number of possible outcomes
-        outcomes = int(input("How many possible outcomes are there? (e.g., 6 for a die, 2 for coin toss): "))
+        outcomes = int(input("How many possible outcomes are there? (e.g., 6 for a dice, 2 for coin flip): "))
         if outcomes <= 0:
             print("Please enter a positive number.")
             return
@@ -36,13 +36,15 @@ def main():
     # Calculate and display the results
     expected_results, actual_results = calculate_probabilities(outcomes, trials)
     print("\nResults:")
-    print("Expected Values (Probabilities):")
+    print("Expected Values (Probability):")
     for outcome, expected_count in expected_results.items():
-        print(f"{outcome}: {expected_count:.2f} times")
+        expected_percentage = (expected_count / trials) * 100
+        print(f"{outcome}: {expected_count:.2f} times ({expected_percentage:.2f}%)")
 
     print("\nActual Results:")
     for outcome, actual_count in actual_results.items():
-        print(f"{outcome}: {actual_count} times")
+        actual_percentage = (actual_count / trials) * 100
+        print(f"{outcome}: {actual_count} times ({actual_percentage:.2f}%)")
 
 if __name__ == "__main__":
     main()
