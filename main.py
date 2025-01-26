@@ -24,6 +24,7 @@ def main():
             return
 
         # Ask the user for the number of trials
+        print("Note: Performing a very high number of trials may take a long time and use a lot of memory.")
         trials = int(input("How many trials would you like to perform? "))
         if trials <= 0:
             print("Please enter a positive number.")
@@ -34,7 +35,12 @@ def main():
         return
 
     # Calculate and display the results
-    expected_results, actual_results = calculate_probabilities(outcomes, trials)
+    try:
+        expected_results, actual_results = calculate_probabilities(outcomes, trials)
+    except Exception as e:
+        print(f"An error occurred while calculating probabilities: {e}")
+        return
+
     print("\nResults:")
     print("Expected Values (Probability):")
     for outcome, expected_count in expected_results.items():
